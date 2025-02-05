@@ -6,9 +6,9 @@ export default {
 		'./src/components/**/*.{js,ts,jsx,tsx,mdx}',
 		'./src/app/**/*.{js,ts,jsx,tsx,mdx}',
 	],
-	theme: {},
+	theme: { colors: {} },
 	plugins: [daisyui],
 	daisyui: {
-		themes: ['black', 'lofi'],
+		themes: ['light', 'dracula'],
 	},
 } satisfies Config;

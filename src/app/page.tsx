@@ -1,3 +1,5 @@
-export default function Home() {
-	return <div>Home</div>;
+import Content from '@/components/sections/content';
+
+export default async function Home() {
+	return <Content />;
 }

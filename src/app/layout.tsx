@@ -4,6 +4,7 @@ import { sans } from '@/components/font';
 import Navbar from '@/components/sections/navbar';
 import Footer from '@/components/sections/footer';
 import Hero from '@/components/sections/hero';
+import Sidebar from '@/components/sections/Sidebar';
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -16,17 +17,20 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html lang="en" className="bg-base-content">
 			<body className={`${sans.className} antialiased relative`}>
-				<div className="text-base-200 fixed w-full top-0 left-0 -z-10 flex justify-center bg-base-content h-52 lg:h-72">
+				<div className="text-base-100 fixed w-full top-0 left-0 -z-10 flex justify-center h-52 lg:h-72">
 					<Hero />
 				</div>
-				<div className="w-full bg-base-200 mt-52 lg:mt-72">
+				<div className="w-full bg-base-200 mt-52 lg:mt-72 rounded-xl">
 					<Navbar />
-					<div className="min-h-screen max-w-7xl mx-auto px-4">
-						{children}
-						<Footer />
+					<div className="max-w-7xl mx-auto px-4 min-h-screen">
+						<div className="sticky top-20 grid grid-cols-4 gap-5">
+							<Sidebar />
+							{children}
+						</div>
 					</div>
+					<Footer />
 				</div>
 			</body>
 		</html>
