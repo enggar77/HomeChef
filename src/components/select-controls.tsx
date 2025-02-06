@@ -2,6 +2,7 @@
 
 import { CategoryType } from '@/lib/definitions';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 type Props = {
 	categories: CategoryType[];
@@ -9,20 +10,27 @@ type Props = {
 };
 
 export default function SelectControls({ categories, sortOptions }: Props) {
-	const [selectedCategory, setSelectedCategory] = useState('');
+	const router = useRouter();
+	const [selectedCategory, setSelectedCategory] = useState('default');
 	const [selectedSortOption, setSelectedSortOption] = useState('default');
 	return (
 		<div className="flex gap-2">
 			<select
 				className="select select-xs w-24 truncate"
 				value={selectedCategory}
-				onChange={(e) => setSelectedCategory(e.target.value)}
+				onChange={(e) => {
+					const value = e.target.value;
+					setSelectedCategory(value);
+					if (value !== 'default') {
+						router.push(`/category/${value.toLowerCase()}`);
+					}
+				}}
 			>
 				<option disabled value={'default'}>
 					Categories
 				</option>
 				{categories.map((category: CategoryType) => (
-					<option key={category.idCategory} value={category.idCategory}>
+					<option key={category.idCategory} value={category.strCategory}>
 						{category.strCategory}
 					</option>
 				))}

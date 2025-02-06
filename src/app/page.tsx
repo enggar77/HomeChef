@@ -1,7 +1,5 @@
-import Content from '@/components/sections/content';
-import { getRecipesByCategory } from '@/lib/data';
+import { redirect } from 'next/navigation';
 
-export default async function Home() {
-	const recipes = await getRecipesByCategory('Beef');
-	return <Content recipes={recipes} />;
+export default function Home() {
+	redirect('/category/beef');
 }
