@@ -1,13 +1,13 @@
-import Image from 'next/image';
 import ThemeSwitch from '../theme-switch';
 import Link from 'next/link';
 import { serif } from '../font';
 import Dropdown from '../dropdown-menu';
 import SearchBar from '../search-bar';
+import MobileSort from '../mobile-sorting';
 
 export default function Navbar() {
 	return (
-		<nav className="sticky top-0 w-full bg-base-200 rounded-xl z-10 shadow-lg">
+		<nav className="sticky top-0 bg-base-200 w-full rounded-xl z-10 shadow-lg">
 			<div className="max-w-7xl mx-auto flex items-center justify-between py-2 md:py-4 px-4">
 				{/* Logo */}
 				<Link href="/">
@@ -40,9 +40,12 @@ export default function Navbar() {
 			</div>
 
 			{/* Mobile Search Bar */}
-			<div className="md:hidden max-w-7xl mx-auto flex items-center justify-start pb-4 px-4">
+			<div className="md:hidden flex items-center justify-start pb-4 px-4">
 				<SearchBar />
 			</div>
+
+			{/* Mobile Sorting */}
+			<MobileSort />
 		</nav>
 	);
 }

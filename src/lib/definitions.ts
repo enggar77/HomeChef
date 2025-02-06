@@ -3,3 +3,9 @@ export type CategoryType = {
 	strCategory: string;
 	strCategoryThumb: string;
 };
+
+export type RecipesType = {
+	idMeal: string;
+	strMeal: string;
+	strMealThumb: string;
+};

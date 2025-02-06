@@ -15,3 +15,16 @@ export const getCategories = async () => {
 		console.error(error);
 	}
 };
+
+export const getRecipesByCategory = async (category: string) => {
+	try {
+		const response = await fetch(`${BASE_URL}/filter.php?c=${category}`);
+		if (!response.ok) {
+			throw new Error('Failed to fetch data');
+		}
+		const data = await response.json();
+		return data.meals;
+	} catch (error) {
+		console.error(error);
+	}
+};

@@ -6,7 +6,7 @@ export default function ThemeSwitch() {
 	const [isDark, setIsDark] = useState(false);
 
 	const toggleTheme = () => {
-		const newTheme = !isDark ? 'dracula' : 'light';
+		const newTheme = !isDark ? 'retro' : 'dim';
 		setIsDark(!isDark);
 		document.documentElement.setAttribute('data-theme', newTheme);
 	};

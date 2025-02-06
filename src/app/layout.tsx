@@ -22,10 +22,10 @@ export default function RootLayout({
 				<div className="text-base-100 fixed w-full top-0 left-0 -z-10 flex justify-center h-52 lg:h-72">
 					<Hero />
 				</div>
-				<div className="w-full bg-base-200 mt-52 lg:mt-72 rounded-xl">
+				<div className="w-full bg-base-300 mt-52 lg:mt-72 rounded-xl">
 					<Navbar />
-					<div className="max-w-7xl mx-auto px-4 min-h-screen">
-						<div className="sticky top-20 grid grid-cols-4 gap-5">
+					<div className="max-w-7xl mx-auto px-4">
+						<div className="sticky top-[168px] md:top-[120px] lg:top-20 grid grid-cols-4 lg:gap-10">
 							<Sidebar />
 							{children}
 						</div>
