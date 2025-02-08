@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { sans } from '@/components/font';
 import Navbar from '@/components/sections/navbar';
-import Footer from '@/components/sections/footer';
 import Hero from '@/components/sections/hero';
 import Sidebar from '@/components/sections/Sidebar';
+import Footer from '@/components/sections/footer';
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -29,8 +29,8 @@ export default function RootLayout({
 							<Sidebar />
 							{children}
 						</div>
+						<Footer />
 					</div>
-					<Footer />
 				</div>
 			</body>
 		</html>

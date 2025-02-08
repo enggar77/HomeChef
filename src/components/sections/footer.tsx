@@ -1,9 +1,7 @@
 export default function Footer() {
 	return (
-		<footer className="">
-			<p className="text-sm text-center">
-				© 2024 HomeChef. All rights reserved.
-			</p>
+		<footer className="py-4 w-full">
+			<p className="text-sm text-end">© 2025 HomeChef.</p>
 		</footer>
 	);
 }

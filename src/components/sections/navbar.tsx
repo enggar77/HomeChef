@@ -2,12 +2,11 @@ import ThemeSwitch from '../theme-switch';
 import Link from 'next/link';
 import { serif } from '../font';
 import Dropdown from '../dropdown-menu';
-import SearchBar from '../search-bar';
 import MobileSort from '../mobile-sorting';
 
 export default function Navbar() {
 	return (
-		<nav className="sticky top-0 bg-base-200 w-full rounded-xl z-10 shadow-lg">
+		<nav className="sticky top-0 bg-base-200 w-full rounded-xl z-10 shadow-lg py-2">
 			<div className="max-w-7xl mx-auto flex items-center justify-between py-2 md:py-4 px-4">
 				{/* Logo */}
 				<Link href="/">
@@ -15,11 +14,6 @@ export default function Navbar() {
 						HomeChef
 					</h1>
 				</Link>
-
-				{/* Search Bar */}
-				<div className="hidden md:block">
-					<SearchBar />
-				</div>
 
 				{/* Theme Switcher and Login Button */}
 				<div className="hidden md:flex items-center">
@@ -37,11 +31,6 @@ export default function Navbar() {
 				<div className="md:hidden">
 					<Dropdown />
 				</div>
-			</div>
-
-			{/* Mobile Search Bar */}
-			<div className="md:hidden flex items-center justify-start pb-4 px-4">
-				<SearchBar />
 			</div>
 
 			{/* Mobile Sorting */}
