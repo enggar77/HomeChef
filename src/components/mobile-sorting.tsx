@@ -1,11 +1,14 @@
-import { Bookmark } from 'lucide-react';
+import { BookMarked } from 'lucide-react';
 import SelectControls from './select-controls';
 import { getCategories } from '@/lib/data';
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
+import Link from 'next/link';
 
 export const sortOptions = ['Name', 'Newest', 'Oldest'];
 
 export default async function MobileSort() {
 	const categories = await getCategories();
+	const { isAuthenticated } = getKindeServerSession();
 
 	return (
 		<>
@@ -13,9 +16,11 @@ export default async function MobileSort() {
 				<SelectControls categories={categories} />
 
 				{/* Favorites */}
-				<div>
-					<Bookmark fill="" />
-				</div>
+				{(await isAuthenticated()) && (
+					<Link href="">
+						<BookMarked />
+					</Link>
+				)}
 			</div>
 		</>
 	);

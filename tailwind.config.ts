@@ -9,6 +9,6 @@ export default {
 	theme: { colors: {} },
 	plugins: [daisyui],
 	daisyui: {
-		themes: ['dim', 'retro'],
+		themes: ['retro', 'dim'],
 	},
 } satisfies Config;

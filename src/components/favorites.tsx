@@ -1,9 +1,9 @@
-import { Bookmark } from 'lucide-react';
+import { BookMarked } from 'lucide-react';
 
 export default function Favorites() {
 	return (
 		<div title="bookmarked recipes" className="cursor-pointer">
-			<Bookmark className="" fill="" />
+			<BookMarked className="" />
 		</div>
 	);
 }

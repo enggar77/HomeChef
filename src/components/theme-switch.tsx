@@ -6,7 +6,7 @@ export default function ThemeSwitch() {
 	const [isDark, setIsDark] = useState(false);
 
 	const toggleTheme = () => {
-		const newTheme = !isDark ? 'retro' : 'dim';
+		const newTheme = !isDark ? 'dim' : 'retro';
 		setIsDark(!isDark);
 		document.documentElement.setAttribute('data-theme', newTheme);
 	};

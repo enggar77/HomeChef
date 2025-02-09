@@ -1,17 +1,23 @@
 import { serif } from '@/components/font';
 import Instructions from '@/components/Instructions';
-import Favorites from '@/components/sections/favorites';
+import Favorites from '@/components/favorites';
 import { getRecipeDetails } from '@/lib/data';
 import { RecipeDetailsType } from '@/lib/definitions';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
+import SaveButton from '@/components/save-button';
 
 export default async function RecipePage({
 	params,
 }: {
 	params: { slug: string };
 }) {
-	const recipeDetails: RecipeDetailsType = await getRecipeDetails(params.slug);
+	const recipeDetails: RecipeDetailsType = await getRecipeDetails(
+		params.slug
+	);
+	const { isAuthenticated } = getKindeServerSession();
+
 	// Ingredients
 	const ingredients = [];
 	for (let i = 1; i <= 20; i++) {
@@ -36,15 +42,18 @@ export default async function RecipePage({
 					{recipeDetails.strCategory}
 				</h1>
 				<div className="hidden lg:block">
-					<Link href="" className="lg:flex items-center gap-1">
-						<span className="text-sm">Pinned Recipes</span>
-						<Favorites />
-					</Link>
+					{(await isAuthenticated()) && (
+						<Link href="">
+							<Favorites />
+						</Link>
+					)}
 				</div>
 			</div>
 
 			<div className="h-[90%] max-w-5xl mx-auto overflow-y-scroll px-4 overflow-x-hidden">
-				<h1 className={`${serif.className} text-4xl font-bold text-center`}>
+				<h1
+					className={`${serif.className} text-2xl md:text-4xl font-bold text-center`}
+				>
 					{recipeDetails.strMeal}
 				</h1>
 				<div className="divider" />
@@ -58,7 +67,9 @@ export default async function RecipePage({
 										<span className="flex justify-between w-full">
 											<span>{ingredient.ingredient}</span>
 											<span className="border-b border-dotted border-gray-300 flex-1 mx-2"></span>
-											<span>{ingredient.measurement}</span>
+											<span>
+												{ingredient.measurement}
+											</span>
 										</span>
 									</li>
 								))}
@@ -85,11 +96,15 @@ export default async function RecipePage({
 									</div>
 									{recipeDetails.strSource && (
 										<div className="flex gap-2 text-sm">
-											<h3 className="font-semibold">Source:</h3>
+											<h3 className="font-semibold">
+												Source:
+											</h3>
 											<span className="break-all link">
 												<Link
 													target="_blank"
-													href={recipeDetails.strSource}
+													href={
+														recipeDetails.strSource
+													}
 												>
 													{recipeDetails.strSource}
 												</Link>
@@ -98,11 +113,15 @@ export default async function RecipePage({
 									)}
 									{recipeDetails.strYoutube && (
 										<div className="flex gap-2 text-sm">
-											<h3 className="font-semibold">Youtube:</h3>
+											<h3 className="font-semibold">
+												Youtube:
+											</h3>
 											<span className="break-all link">
 												<Link
 													target="_blank"
-													href={recipeDetails.strYoutube}
+													href={
+														recipeDetails.strYoutube
+													}
 												>
 													{recipeDetails.strYoutube}
 												</Link>
@@ -111,22 +130,30 @@ export default async function RecipePage({
 									)}
 									{recipeDetails.strTags && (
 										<div className="flex gap-2 text-sm">
-											<h3 className="font-semibold">Tag:</h3>
+											<h3 className="font-semibold">
+												Tag:
+											</h3>
 											{recipeDetails.strTags
 												?.split(',')
 												.map((tag) => (
-													<span key={tag} className="badge">
+													<span
+														key={tag}
+														className="badge"
+													>
 														{tag}
 													</span>
 												))}
 										</div>
 									)}
+									<SaveButton />
 								</div>
 							</div>
 						</div>
 					</div>
 					<div className="divider" />
-					<Instructions instructions={recipeDetails.strInstructions} />
+					<Instructions
+						instructions={recipeDetails.strInstructions}
+					/>
 				</main>
 			</div>
 		</div>
