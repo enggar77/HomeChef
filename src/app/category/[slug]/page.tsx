@@ -5,11 +5,13 @@ import Favorites from '@/components/favorites';
 import Link from 'next/link';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 
-export default async function CategoryPage({
-	params,
-}: {
-	params: { slug: string };
-}) {
+type PageProps = {
+	params: {
+		slug: string;
+	};
+};
+
+export default async function CategoryPage({ params }: PageProps) {
 	const recipes = await getRecipesByCategory(params.slug);
 	const { isAuthenticated } = getKindeServerSession();
 
