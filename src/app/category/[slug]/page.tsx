@@ -12,15 +12,16 @@ type PageProps = {
 };
 
 export default async function CategoryPage({ params }: PageProps) {
-	const recipes = await getRecipesByCategory(params.slug);
+	// Wrap params in a Promise.resolve and await it:
+	const { slug } = await Promise.resolve(params);
+	const recipes = await getRecipesByCategory(slug);
 	const { isAuthenticated } = getKindeServerSession();
 
 	return (
 		<div className="col-span-4 lg:col-span-3 pt-5 lg:h-[calc(100vh-100px)] overflow-scroll">
-			<div className=" lg:flex justify-between lg:mb-10">
-				<h1 className={`text-xl font-semibold md:text-2xl`}>
-					Recipes for{' '}
-					{params.slug.charAt(0).toUpperCase() + params.slug.slice(1)}
+			<div className="lg:flex justify-between lg:mb-10">
+				<h1 className="text-xl font-semibold md:text-2xl">
+					Recipes for {slug.charAt(0).toUpperCase() + slug.slice(1)}
 				</h1>
 				<div className="hidden lg:block">
 					{(await isAuthenticated()) && (
