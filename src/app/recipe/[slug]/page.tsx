@@ -9,16 +9,13 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import SaveButton from '@/components/save-button';
 import { getBookmarkStatus } from '@/lib/actions';
 
-type PageProps = {
-	params: {
-		slug: string;
-	};
-};
-
-export default async function RecipePage({ params }: PageProps) {
-	const resolvedParams: PageProps['params'] = await Promise.resolve(params);
-	const { slug } = resolvedParams;
-	const recipeDetails: RecipeDetailsType = await getRecipeDetails(slug);
+export default async function RecipePage(props: {
+	params: Promise<{ slug: string }>;
+}) {
+	const params = await props.params;
+	const recipeDetails: RecipeDetailsType = await getRecipeDetails(
+		params.slug
+	);
 	const { isAuthenticated, getUser } = getKindeServerSession();
 	let isBookmarked = false;
 	const user = await getUser();

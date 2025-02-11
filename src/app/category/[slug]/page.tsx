@@ -5,23 +5,19 @@ import Favorites from '@/components/favorites';
 import Link from 'next/link';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 
-type PageProps = {
-	params: {
-		slug: string;
-	};
-};
-
-export default async function CategoryPage({ params }: PageProps) {
-	const resolvedParams: PageProps['params'] = await Promise.resolve(params);
-	const { slug } = resolvedParams;
-	const recipes = await getRecipesByCategory(slug);
+export default async function CategoryPage(props: {
+	params: Promise<{ slug: string }>;
+}) {
+	const params = await props.params;
+	const recipes = await getRecipesByCategory(params.slug);
 	const { isAuthenticated } = getKindeServerSession();
 
 	return (
 		<div className="col-span-4 lg:col-span-3 pt-5 lg:h-[calc(100vh-100px)] overflow-scroll">
 			<div className="lg:flex justify-between lg:mb-10">
 				<h1 className="text-xl font-semibold md:text-2xl">
-					Recipes for {slug.charAt(0).toUpperCase() + slug.slice(1)}
+					Recipes for{' '}
+					{params.slug.charAt(0).toUpperCase() + params.slug.slice(1)}
 				</h1>
 				<div className="hidden lg:block">
 					{(await isAuthenticated()) && (
