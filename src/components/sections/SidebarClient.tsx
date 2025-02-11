@@ -10,10 +10,12 @@ type Props = {
 export default function SidebarClient({ categories }: Props) {
 	const pathname = usePathname();
 	const detailsPage = pathname.includes('/recipe');
+	const accountPage = pathname.includes('/account');
+	const bookmarkPage = pathname.includes('/bookmark');
 	return (
 		<div
 			className={`hidden lg:block col-span-1 h-[calc(100vh-100px)] pt-5 overflow-hidden ${
-				detailsPage ? 'lg:hidden' : ''
+				detailsPage || accountPage || bookmarkPage ? 'lg:hidden' : ''
 			}`}
 		>
 			<h1 className={' text-xl font-semibold mb-10'}>Categories</h1>

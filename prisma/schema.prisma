@@ -29,10 +29,6 @@ model Recipe {
   mealId        String   // ID from the meal API
   name          String
   thumbnail     String
-  category      String
-  area          String
-  instructions  String?  // Store instructions for offline access
-  tags          String? // Store tags as comma-separated values
   userId        String
   user          User     @relation(fields: [userId], references: [id])
   createdAt     DateTime @default(now())

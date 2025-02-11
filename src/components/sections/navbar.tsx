@@ -6,9 +6,21 @@ import MobileSort from '../mobile-sorting';
 import { LoginLink, LogoutLink } from '@kinde-oss/kinde-auth-nextjs/server';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import Image from 'next/image';
+import { prisma } from '@/lib/db';
 
 export default async function Navbar() {
-	const { isAuthenticated, getUser } = getKindeServerSession();
+	const { getUser, isAuthenticated } = getKindeServerSession();
+	const user = await getUser();
+	const aunthenticated = await isAuthenticated();
+	let userData;
+	if (user && aunthenticated) {
+		userData = await prisma.user.findFirst({
+			where: {
+				id: user.id,
+			},
+		});
+	}
+
 	return (
 		<nav className="sticky top-0 bg-base-200 w-full rounded-xl z-10 shadow-lg">
 			<div className="max-w-7xl mx-auto flex items-center justify-between py-2 md:py-4 px-4">
@@ -24,40 +36,36 @@ export default async function Navbar() {
 					<div className="flex items-center gap-8">
 						<ThemeSwitch />
 
-						{(await isAuthenticated()) ? (
+						{user && userData ? (
 							<details className="dropdown dropdown-end">
 								<summary className="avatar cursor-pointer">
 									<div className="ring-base-content ring-offset-base-100 w-10 rounded-full ring ring-offset-2 relative">
-										{(async () => {
-											const user = await getUser();
-											if (user?.picture) {
-												return (
-													<Image
-														src={user.picture}
-														alt={
-															user.given_name ||
-															'User avatar'
-														}
-														fill
-														className="object-cover"
-													/>
-												);
-											} else {
-												const initial =
-													(user?.given_name ||
-														user?.family_name ||
-														'U')[0].toUpperCase();
-												return (
-													<div className="w-full h-full flex items-center justify-center bg-primary text-primary-content">
-														{initial}
-													</div>
-												);
-											}
-										})()}
+										{userData.profileImage ? (
+											<Image
+												src={userData.profileImage}
+												alt={
+													userData.firstName ||
+													'User avatar'
+												}
+												fill
+												className="object-cover"
+											/>
+										) : (
+											<div className="w-full h-full flex items-center justify-center bg-primary text-primary-content">
+												{(userData.firstName ||
+													'U')[0].toUpperCase()}
+											</div>
+										)}
 									</div>
 								</summary>
 
-								<ul className="menu dropdown-content text-neutral-content bg-neutral rounded-box z-[1] w-52 p-2 shadow">
+								<ul className="menu dropdown-content text-base-content bg-base-300 rounded-box z-[1] w-52 p-2 shadow ">
+									<li>
+										<Link href="/account">Account</Link>
+									</li>
+									<li>
+										<Link href="/bookmark">Bookmark</Link>
+									</li>
 									<li>
 										<LogoutLink>Logout</LogoutLink>
 									</li>

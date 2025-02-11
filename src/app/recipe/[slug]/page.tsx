@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import SaveButton from '@/components/save-button';
+import { getBookmarkStatus } from '@/lib/actions';
 
 export default async function RecipePage({
 	params,
@@ -16,7 +17,17 @@ export default async function RecipePage({
 	const recipeDetails: RecipeDetailsType = await getRecipeDetails(
 		params.slug
 	);
-	const { isAuthenticated } = getKindeServerSession();
+	const { isAuthenticated, getUser } = getKindeServerSession();
+	let isBookmarked = false;
+	const user = await getUser();
+	if (await isAuthenticated()) {
+		if (user) {
+			isBookmarked = !!(await getBookmarkStatus(
+				recipeDetails.idMeal,
+				user.id
+			));
+		}
+	}
 
 	// Ingredients
 	const ingredients = [];
@@ -43,7 +54,7 @@ export default async function RecipePage({
 				</h1>
 				<div className="hidden lg:block">
 					{(await isAuthenticated()) && (
-						<Link href="">
+						<Link href="/bookmark">
 							<Favorites />
 						</Link>
 					)}
@@ -78,6 +89,18 @@ export default async function RecipePage({
 						<div className="divider divider-horizontal" />
 						<div className="flex-1">
 							<div className="gap-6 w-full">
+								<div className="md:hidden mb-5">
+									<SaveButton
+										recipe={{
+											idMeal: recipeDetails.idMeal,
+											strMeal: recipeDetails.strMeal,
+											strMealThumb:
+												recipeDetails.strMealThumb,
+										}}
+										initialSaved={isBookmarked}
+										user={user}
+									/>
+								</div>
 								<div className="relative h-[200px] w-full md:h-[400px] overflow-hidden rounded-xl mb-5">
 									<Image
 										src={recipeDetails.strMealThumb}
@@ -87,6 +110,7 @@ export default async function RecipePage({
 										quality={100}
 									/>
 								</div>
+
 								<div className="space-y-4">
 									<div className="flex gap-2 text-sm">
 										<h3 className="font-semibold">Dish:</h3>
@@ -145,7 +169,18 @@ export default async function RecipePage({
 												))}
 										</div>
 									)}
-									<SaveButton />
+									<div className="hidden md:block">
+										<SaveButton
+											recipe={{
+												idMeal: recipeDetails.idMeal,
+												strMeal: recipeDetails.strMeal,
+												strMealThumb:
+													recipeDetails.strMealThumb,
+											}}
+											initialSaved={isBookmarked}
+											user={user}
+										/>
+									</div>
 								</div>
 							</div>
 						</div>

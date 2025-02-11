@@ -3,10 +3,10 @@
 import { useState } from 'react';
 
 export default function ThemeSwitch() {
-	const [isDark, setIsDark] = useState(false);
+	const [isDark, setIsDark] = useState(true);
 
 	const toggleTheme = () => {
-		const newTheme = !isDark ? 'dim' : 'retro';
+		const newTheme = isDark ? 'dim' : 'retro';
 		setIsDark(!isDark);
 		document.documentElement.setAttribute('data-theme', newTheme);
 	};
@@ -14,7 +14,6 @@ export default function ThemeSwitch() {
 	return (
 		<input
 			type="checkbox"
-			checked={!isDark}
 			onChange={toggleTheme}
 			className="toggle theme-controller"
 		/>

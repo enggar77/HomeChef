@@ -22,7 +22,10 @@ export default async function CategoryPage({
 				</h1>
 				<div className="hidden lg:block">
 					{(await isAuthenticated()) && (
-						<Link href="" className="lg:flex items-center gap-1">
+						<Link
+							href="/bookmark"
+							className="lg:flex items-center gap-1"
+						>
 							<Favorites />
 						</Link>
 					)}
