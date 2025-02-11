@@ -17,7 +17,7 @@ export default async function MobileSort() {
 
 				{/* Favorites */}
 				{(await isAuthenticated()) && (
-					<Link href="">
+					<Link href="/bookmark">
 						<BookMarked />
 					</Link>
 				)}

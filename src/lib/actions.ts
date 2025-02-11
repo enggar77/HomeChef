@@ -11,17 +11,23 @@ export async function deleteUserAccount() {
 
 	if (!(await isAuthenticated()) || !user) redirect('/api/auth/login');
 
-	await prisma.recipe.deleteMany({
-		where: {
-			userId: user.id,
-		},
-	});
-	await prisma.user.deleteMany({
-		where: {
-			id: user.id,
-		},
-	});
+	try {
+		await prisma.recipe.deleteMany({
+			where: {
+				userId: user.id,
+			},
+		});
+		await prisma.user.deleteMany({
+			where: {
+				id: user.id,
+			},
+		});
+	} catch (err) {
+		console.log(err);
+		throw new Error('Failed to delete user.');
+	}
 
+	revalidatePath('/'); // clear cache if needed
 	redirect('/api/auth/logout');
 }
 
@@ -32,9 +38,19 @@ export async function addToBookmark(recipe: {
 }) {
 	const { getUser, isAuthenticated } = getKindeServerSession();
 	const user = await getUser();
-	const authenticated = await isAuthenticated();
 
-	if (!authenticated && !user) redirect('/api/auth/login');
+	if (!(await isAuthenticated()) || !user) {
+		return redirect('/api/auth/login');
+	}
+
+	// Check that the user exists in the database.
+	const dbUser = await prisma.user.findUnique({
+		where: { id: user.id },
+	});
+	if (!dbUser) {
+		// If the user doesn't exist, force a logout to clear the session.
+		return redirect('/api/auth/logout');
+	}
 
 	await prisma.recipe.create({
 		data: {
@@ -59,7 +75,9 @@ export async function deleteBookmark(userId: string, mealId: string) {
 	const { getUser, isAuthenticated } = getKindeServerSession();
 	const user = await getUser();
 
-	if (!(await isAuthenticated()) || !user) redirect('/api/auth/login');
+	if (!(await isAuthenticated()) || !user) {
+		return redirect('/api/auth/login');
+	}
 
 	try {
 		const result = await prisma.recipe.delete({

@@ -31,7 +31,7 @@ export default async function Bookmark() {
 			<div className="divider" />
 
 			{user && bookmarkData.length ? (
-				<div className="grid grid-cols-1 gap-y-10 pt-5 lg:pt-0 md:grid-cols-4 md:gap-5 md:gap-y-10 md:h-[90%] overflow-scroll">
+				<div className="grid grid-cols-1 gap-y-10 pt-5 lg:pt-0 md:grid-cols-3 lg:grid-cols-4 md:gap-5 md:gap-y-10 md:h-[90%] overflow-scroll">
 					{bookmarkData.map((item) => (
 						<div key={item.idMeal}>
 							<BookmarkRecipe recipe={item} userId={user.id} />

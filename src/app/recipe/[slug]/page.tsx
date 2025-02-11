@@ -153,7 +153,7 @@ export default async function RecipePage({
 										</div>
 									)}
 									{recipeDetails.strTags && (
-										<div className="flex gap-2 text-sm">
+										<div className="flex gap-2 text-sm flex-wrap">
 											<h3 className="font-semibold">
 												Tag:
 											</h3>
