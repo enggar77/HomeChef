@@ -12,8 +12,8 @@ type PageProps = {
 };
 
 export default async function CategoryPage({ params }: PageProps) {
-	// Wrap params in a Promise.resolve and await it:
-	const { slug } = await Promise.resolve(params);
+	const resolvedParams: PageProps['params'] = await Promise.resolve(params);
+	const { slug } = resolvedParams;
 	const recipes = await getRecipesByCategory(slug);
 	const { isAuthenticated } = getKindeServerSession();
 

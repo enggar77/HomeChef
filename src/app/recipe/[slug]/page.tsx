@@ -16,7 +16,8 @@ type PageProps = {
 };
 
 export default async function RecipePage({ params }: PageProps) {
-	const { slug } = await Promise.resolve(params);
+	const resolvedParams: PageProps['params'] = await Promise.resolve(params);
+	const { slug } = resolvedParams;
 	const recipeDetails: RecipeDetailsType = await getRecipeDetails(slug);
 	const { isAuthenticated, getUser } = getKindeServerSession();
 	let isBookmarked = false;
