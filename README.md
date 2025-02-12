@@ -10,14 +10,14 @@ Live site :
 
 -   Next.js
 -   Kinde - Authentication
--   Prisma & Sqlite - Database
+-   Prisma & Neon - Database
 -   Typescript
 -   DaisyUI
 
 ## Features
 
 -   Filter recipes by category
--       Bookmark recipes
+-   Bookmark recipes
 -   Get recipe details
 -   Create and Delete account
 -   Light & Dark Mode

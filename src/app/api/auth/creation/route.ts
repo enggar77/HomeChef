@@ -32,7 +32,7 @@ export async function GET() {
 			});
 		}
 
-		return NextResponse.redirect('http://localhost:3000');
+		return NextResponse.redirect(`${process.env.KINDE_SITE_URL}`);
 	} catch (error) {
 		console.error('Error in /api/auth/creation:', error);
 		return NextResponse.json(
