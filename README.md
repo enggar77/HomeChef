@@ -2,13 +2,12 @@
 
 Live site : https://home-chef-nine.vercel.app
 
-## Screenshot
-
 <img src="home-chef.jpeg" alt="Home Page" width="540" height="auto">
 
 ## Tech Stack
 
 -   Next.js
+-   TheMealDb API
 -   Kinde - Authentication
 -   Prisma & Neon - Database
 -   Typescript
